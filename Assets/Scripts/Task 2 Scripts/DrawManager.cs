@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DrawManager : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class DrawManager : MonoBehaviour
 
     [SerializeField]
     private Line linePrefab;
+
+    List<GameObject> lines = new List<GameObject>();
 
     private Line currentLine;
 
@@ -28,6 +31,7 @@ public class DrawManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             currentLine = Instantiate(linePrefab, mousePosition, Quaternion.identity);
+            lines.Add(currentLine.gameObject);
         }
 
         if (Input.GetMouseButton(0))
@@ -37,7 +41,7 @@ public class DrawManager : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            currentLine = null;
+            Destroy(currentLine.gameObject);
         }
     }
 }

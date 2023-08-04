@@ -1,17 +1,23 @@
 using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class RandomSpriteGenerator : MonoBehaviour
 {
-    public GameObject spritePrefab;
-    public Camera mainCamera;
+    [SerializeField]
+    List<GameObject> sprites = new List<GameObject>();
 
-    public void GenerateRandomSprite()
+    public void Reactivate()
     {
-        Vector3 randomPosition = new Vector3(Random.Range(-5f, 5f), Random.Range(-3f, 3f), 10f);
-        //
-        Quaternion randomRotation = Quaternion.Euler(0f, 0f, Random.Range(0f, 360f));
+        foreach (GameObject sprite in sprites)
+        {
+            Vector2 randomPosition = new Vector2(
+                Random.Range(-290f, 290f),
+                Random.Range(-120f, 85f)
+            );
+            sprite.SetActive(true);
 
-        GameObject newSprite = Instantiate(spritePrefab, randomPosition, randomRotation);
-        newSprite.transform.SetParent(mainCamera.transform);
+            sprite.transform.localPosition = randomPosition;
+        }
     }
 }

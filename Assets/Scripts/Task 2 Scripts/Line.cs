@@ -11,6 +11,8 @@ public class Line : MonoBehaviour
 
     private List<Vector2> points = new List<Vector2>();
 
+    List<GameObject> circles = new List<GameObject>();
+
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
