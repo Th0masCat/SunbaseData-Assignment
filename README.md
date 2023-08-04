@@ -14,7 +14,8 @@ To make the UI more engaging, I have implemented simple animations using DOTween
 Additionally, I have ensured that the UI layout is responsive.
 
 ### Demo
-https://github.com/Th0masCat/SunbaseData-Assignment/assets/74812563/ba205508-7d46-41a0-a6b0-af3cc89fedbb
+https://github.com/Th0masCat/SunbaseData-Assignment/assets/74812563/041a2077-a92b-43c5-ada4-636f699f8b56
+
 
 ### Implementation Details
 1. I made a web request to the provided API URL to fetch the JSON data containing client information(UnityWebRequest).
@@ -53,7 +54,8 @@ A restart button that resets the scene, places circles at random positions, and 
 - DOTween
 
 ### Demo
-https://github.com/Th0masCat/SunbaseData-Assignment/assets/74812563/bec2bead-d363-489a-a8aa-9b49d5b51caf
+https://github.com/Th0masCat/SunbaseData-Assignment/assets/74812563/7aa2e3fe-5575-4ec9-ba8f-45dadea61ec8
+
 
 
 ## Instructions to Run
