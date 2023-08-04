@@ -18,7 +18,6 @@ public class CircleSpriteBehaviour : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Line"))
         {
-            Debug.Log("Circle hit by line");
             markedForDeletion = true;
             gameObject.GetComponent<CircleCollider2D>().enabled = false;
         }

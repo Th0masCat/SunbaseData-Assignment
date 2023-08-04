@@ -64,9 +64,6 @@ public class ClientManager : MonoBehaviour
                     webRequest.downloadHandler.text
                 );
 
-                //dataList = JsonHelper.GetJsonObject(dataEntryString, "1");
-                //dataEntry = JsonUtility.FromJson<DataEntry>(dataList);
-
                 dataEntryString = JsonHelper.GetJsonObject(webRequest.downloadHandler.text, "data");
 
                 for (int i = 1; i <= 3; i++)
@@ -124,7 +121,8 @@ public class ClientManager : MonoBehaviour
                         dataEntry[
                             clientData.clients.FindIndex(x => x.label == client.Key)
                         ].points.ToString(),
-                        dataEntry[clientData.clients.FindIndex(x => x.label == client.Key)].address
+                        dataEntry[clientData.clients.FindIndex(x => x.label == client.Key)].address,
+                        client.Key
                     );
                     ModalManager.Instance.OpenModal();
                 });
@@ -136,11 +134,8 @@ public class ClientManager : MonoBehaviour
 
     public void OnFilterDropdownValueChanged(int index)
     {
-        Debug.Log("Filter dropdown value changed to: " + index);
-        // Update the current filter based on the selected dropdown option
         currentFilter = (ClientFilter)index;
 
-        // Update the client list with the new filter
         UpdateClientList();
     }
 }
