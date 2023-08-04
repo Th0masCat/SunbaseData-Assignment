@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
+using System.Collections.Generic;
 
 public class ClientManager : MonoBehaviour
 {
@@ -13,6 +14,18 @@ public class ClientManager : MonoBehaviour
 
     [SerializeField]
     ClientDataWrapper clientData;
+
+    [SerializeField]
+    ClientData client;
+
+    [SerializeField]
+    List<DataEntry> dataEntry;
+
+    string clientList;
+    string clientDataString;
+
+    string dataEntryString;
+    string dataList;
 
     private void Start()
     {
@@ -37,15 +50,19 @@ public class ClientManager : MonoBehaviour
                 clientData = JsonUtility.FromJson<ClientDataWrapper>(
                     webRequest.downloadHandler.text
                 );
-                // Call a method to populate the UI with the data.
-                PopulateClientList();
+
+                //dataList = JsonHelper.GetJsonObject(dataEntryString, "1");
+                //dataEntry = JsonUtility.FromJson<DataEntry>(dataList);
+
+                dataEntryString = JsonHelper.GetJsonObject(webRequest.downloadHandler.text, "data");
+
+                for (int i = 1; i <= 3; i++)
+                {
+                    dataList = JsonHelper.GetJsonObject(dataEntryString, i.ToString());
+                    Debug.Log(dataList);
+                    dataEntry.Add(JsonUtility.FromJson<DataEntry>(dataList));
+                }
             }
         }
-    }
-
-    private void PopulateClientList()
-    {
-        if (clientData.data.ContainsKey("1"))
-            clientListText.text = clientData.data["1"].name;
     }
 }

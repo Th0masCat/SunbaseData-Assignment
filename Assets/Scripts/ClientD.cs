@@ -21,6 +21,7 @@ public class DataEntry
 public class ClientDataWrapper
 {
     public List<ClientData> clients;
-    public Dictionary<string, DataEntry> data;
     public string label;
+
+    //public Dictionary<string, DataEntry> data;
 }
