@@ -65,6 +65,6 @@ https://github.com/Th0masCat/SunbaseData-Assignment/assets/74812563/bec2bead-d36
 
 4. Navigate to the "Scenes" folder where you can find Task 1 and test it in the Unity Editor. Similarly you can test out Task 2 from the same folder.
 
-Thank you for considering my submission!
+Thank you for considering my submission!💖
 
 Made by [Sahil Jangra](https://github.com/Th0masCat)
