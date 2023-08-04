@@ -7,8 +7,14 @@ using UnityEngine.UI;
 
 public class ClientManager : MonoBehaviour
 {
-    public TextMeshProUGUI clientListText;
-    public TMP_Dropdown filterDropdown;
+    public enum ClientFilter
+    {
+        All,
+        Manager,
+        NonManager
+    }
+
+    private ClientFilter currentFilter = ClientFilter.All;
 
     [SerializeField]
     GameObject clientDetailsPrefab;
@@ -77,11 +83,33 @@ public class ClientManager : MonoBehaviour
 
     void UpdateClientList()
     {
+        foreach (Transform child in clientDetailsParent)
+        {
+            Destroy(child.gameObject);
+        }
+
         Dictionary<string, string> clientInfo = new();
 
         for (int i = 0; i < 3; i++)
         {
-            clientInfo.Add(clientData.clients[i].label, dataEntry[i].points.ToString());
+            switch (currentFilter)
+            {
+                case ClientFilter.All:
+                    clientInfo.Add(clientData.clients[i].label, dataEntry[i].points.ToString());
+                    break;
+                case ClientFilter.Manager:
+                    if (clientData.clients[i].isManager)
+                    {
+                        clientInfo.Add(clientData.clients[i].label, dataEntry[i].points.ToString());
+                    }
+                    break;
+                case ClientFilter.NonManager:
+                    if (!clientData.clients[i].isManager)
+                    {
+                        clientInfo.Add(clientData.clients[i].label, dataEntry[i].points.ToString());
+                    }
+                    break;
+            }
         }
 
         foreach (KeyValuePair<string, string> client in clientInfo)
@@ -104,5 +132,15 @@ public class ClientManager : MonoBehaviour
             newItem.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = client.Key;
             newItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = client.Value;
         }
+    }
+
+    public void OnFilterDropdownValueChanged(int index)
+    {
+        Debug.Log("Filter dropdown value changed to: " + index);
+        // Update the current filter based on the selected dropdown option
+        currentFilter = (ClientFilter)index;
+
+        // Update the client list with the new filter
+        UpdateClientList();
     }
 }
