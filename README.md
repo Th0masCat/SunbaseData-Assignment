@@ -13,6 +13,9 @@ When clicking on a client in the list, a popup window displays the client's name
 To make the UI more engaging, I have implemented simple animations using DOTween whenever the user clicks on a menu item.
 Additionally, I have ensured that the UI layout is responsive.
 
+### Demo
+https://github.com/Th0masCat/SunbaseData-Assignment/assets/74812563/ba205508-7d46-41a0-a6b0-af3cc89fedbb
+
 ### Implementation Details
 1. I made a web request to the provided API URL to fetch the JSON data containing client information(UnityWebRequest).
 
@@ -48,6 +51,10 @@ A restart button that resets the scene, places circles at random positions, and 
 ### Dependencies
 - Unity Engine: Unity was used to develop and run the project. Version: 2022.3.0
 - DOTween
+
+### Demo
+https://github.com/Th0masCat/SunbaseData-Assignment/assets/74812563/bec2bead-d363-489a-a8aa-9b49d5b51caf
+
 
 ## Instructions to Run
 1. Clone the project repository to your local machine.
