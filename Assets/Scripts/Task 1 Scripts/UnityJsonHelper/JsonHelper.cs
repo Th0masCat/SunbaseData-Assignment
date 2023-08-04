@@ -1,6 +1,8 @@
 ﻿// written by Bekwnn, 2015
 ﻿// contributed by Guney Ozsan, 2016
 ﻿
+
+//P.S.: Used this script to parse nested JSON objects since it was not possible to do it with Unity's built-in JSON parser.
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 

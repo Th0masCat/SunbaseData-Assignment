@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 
+// Represents individual client data
 [System.Serializable]
 public class ClientData
 {
@@ -9,6 +10,7 @@ public class ClientData
     public string name;
 }
 
+// Represents a single data entry
 [System.Serializable]
 public class DataEntry
 {
@@ -17,6 +19,9 @@ public class DataEntry
     public int points;
 }
 
+
+// Represents a collection of client data
+// TO deserialize data I have used JsonHelper.cs
 [System.Serializable]
 public class ClientDataWrapper
 {

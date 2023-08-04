@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class ClientManager : MonoBehaviour
 {
+    // Enum to define different client filters
     public enum ClientFilter
     {
         All,
@@ -16,41 +17,37 @@ public class ClientManager : MonoBehaviour
 
     private ClientFilter currentFilter = ClientFilter.All;
 
-    [SerializeField]
-    GameObject clientDetailsPrefab;
-
-    [SerializeField]
-    Transform clientDetailsParent;
-
     private const string apiUrl =
         "https://qa2.sunbasedata.com/sunbase/portal/api/assignment.jsp?cmd=client_data";
 
     [SerializeField]
-    ClientDataWrapper clientData;
+    GameObject clientDetailsPrefab; // Prefab for displaying client details
 
     [SerializeField]
-    ClientData client;
+    Transform clientDetailsParent; // Parent transform to hold client details
 
-    [SerializeField]
-    List<DataEntry> dataEntry;
-
-    string clientList;
-    string clientDataString;
+    ClientDataWrapper clientData; // Class holding client data from the API
+    List<DataEntry> dataEntry; // List holding data entries from the API
 
     string dataEntryString;
     string dataList;
 
+    //I could only see 3 entries valid in the API response, so I have hardcoded the list length to 3
+    private int listLength = 3;
+
     private void Start()
     {
-        StartCoroutine(LoadDataFromAPI());
+        StartCoroutine(LoadDataFromAPI()); // Start the coroutine to fetch data from the API
     }
 
     private IEnumerator LoadDataFromAPI()
     {
+        // Sending a GET request to the API and waiting for the response
         using (UnityWebRequest webRequest = UnityWebRequest.Get(apiUrl))
         {
             yield return webRequest.SendWebRequest();
 
+            // Check for errors in the API response
             if (
                 webRequest.result == UnityWebRequest.Result.ConnectionError
                 || webRequest.result == UnityWebRequest.Result.ProtocolError
@@ -60,34 +57,42 @@ public class ClientManager : MonoBehaviour
             }
             else
             {
+                // Deserialize the JSON response into the clientData object
                 clientData = JsonUtility.FromJson<ClientDataWrapper>(
                     webRequest.downloadHandler.text
                 );
 
+                // Extracting the "data" field from the JSON response
                 dataEntryString = JsonHelper.GetJsonObject(webRequest.downloadHandler.text, "data");
 
-                for (int i = 1; i <= 3; i++)
+                // Parsing individual data entries from the "data" field and adding them to the dataEntry list
+                for (int i = 1; i <= listLength; i++)
                 {
                     dataList = JsonHelper.GetJsonObject(dataEntryString, i.ToString());
                     Debug.Log(dataList);
                     dataEntry.Add(JsonUtility.FromJson<DataEntry>(dataList));
                 }
 
+                // Update the client list display with the fetched data
                 UpdateClientList();
             }
         }
     }
 
+    // Method to update the client list display based on the current filter
     void UpdateClientList()
     {
+        // Clear the existing client details in the clientDetailsParent
         foreach (Transform child in clientDetailsParent)
         {
             Destroy(child.gameObject);
         }
 
+        // Dictionary to hold client information (label and points)
         Dictionary<string, string> clientInfo = new();
 
-        for (int i = 0; i < 3; i++)
+        // Loop through the data entries and add relevant client information based on the current filter
+        for (int i = 0; i < listLength; i++)
         {
             switch (currentFilter)
             {
@@ -109,6 +114,7 @@ public class ClientManager : MonoBehaviour
             }
         }
 
+        // Create UI elements for each client and populate them with the relevant data
         foreach (KeyValuePair<string, string> client in clientInfo)
         {
             GameObject newItem = Instantiate(clientDetailsPrefab, clientDetailsParent);
@@ -116,6 +122,7 @@ public class ClientManager : MonoBehaviour
                 .GetComponent<Button>()
                 .onClick.AddListener(() =>
                 {
+                    // When a client is clicked, update and open the modal with relevant details
                     ModalManager.Instance.SetModalData(
                         dataEntry[clientData.clients.FindIndex(x => x.label == client.Key)].name,
                         dataEntry[
@@ -127,15 +134,16 @@ public class ClientManager : MonoBehaviour
                     ModalManager.Instance.OpenModal();
                 });
 
-            newItem.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = client.Key;
-            newItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = client.Value;
+            newItem.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = client.Key; // Set client label
+            newItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = client.Value; // Set client points
         }
     }
 
+    // Method to handle changes in the filter dropdown
     public void OnFilterDropdownValueChanged(int index)
     {
-        currentFilter = (ClientFilter)index;
+        currentFilter = (ClientFilter)index; // Update the current filter based on the dropdown selection
 
-        UpdateClientList();
+        UpdateClientList(); // Update the client list display based on the new filter
     }
 }

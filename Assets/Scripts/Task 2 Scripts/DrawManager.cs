@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DrawManager : MonoBehaviour
 {
@@ -10,8 +10,6 @@ public class DrawManager : MonoBehaviour
 
     [SerializeField]
     private Line linePrefab;
-
-    List<GameObject> lines = new List<GameObject>();
 
     private Line currentLine;
 
@@ -31,7 +29,7 @@ public class DrawManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             currentLine = Instantiate(linePrefab, mousePosition, Quaternion.identity);
-            lines.Add(currentLine.gameObject);
+            currentLine.SetPosition(mousePosition);
         }
 
         if (Input.GetMouseButton(0))

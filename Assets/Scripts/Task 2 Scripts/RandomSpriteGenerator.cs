@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
+using DG.Tweening;
 
 public class RandomSpriteGenerator : MonoBehaviour
 {
@@ -11,13 +11,21 @@ public class RandomSpriteGenerator : MonoBehaviour
     {
         foreach (GameObject sprite in sprites)
         {
+            sprite.GetComponent<RectTransform>().localScale = Vector3.zero;
+            sprite.SetActive(false);
+        }
+
+        foreach (GameObject sprite in sprites)
+        {
             Vector2 randomPosition = new Vector2(
                 Random.Range(-290f, 290f),
                 Random.Range(-120f, 85f)
             );
-            sprite.SetActive(true);
 
             sprite.transform.localPosition = randomPosition;
+            sprite.SetActive(true);
+            sprite.GetComponent<CircleCollider2D>().enabled = true;
+            sprite.transform.DOScale(1f, 0.5f);
         }
     }
 }

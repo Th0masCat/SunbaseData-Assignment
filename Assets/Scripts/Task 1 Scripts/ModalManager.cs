@@ -6,59 +6,78 @@ using DG.Tweening;
 
 public class ModalManager : MonoBehaviour
 {
+    // Modal GameObject
+    [Header("Modal GameObject")]
     [SerializeField]
-    GameObject modalGameObject;
+    private GameObject modalGameObject;
+
+    // Main Screen RectTransforms
+    [Header("Main Screen RectTransforms")]
+    [SerializeField]
+    private RectTransform modalWindowRectTransform;
 
     [SerializeField]
-    GameObject list;
+    private RectTransform listRectTransform;
 
     [SerializeField]
-    GameObject dropdown;
+    private RectTransform dropdownRectTransform;
 
+    // Modal Text
     [Header("Modal Text")]
     [SerializeField]
-    TextMeshProUGUI clientName;
+    private TextMeshProUGUI clientName;
 
     [SerializeField]
-    TextMeshProUGUI clientPoints;
+    private TextMeshProUGUI clientPoints;
 
     [SerializeField]
-    TextMeshProUGUI clientAddress;
+    private TextMeshProUGUI clientAddress;
 
     [SerializeField]
-    TextMeshProUGUI clientLabel;
+    private TextMeshProUGUI clientLabel;
 
     public static ModalManager Instance;
 
     private void Awake()
     {
+        // Ensure there is only one instance of ModalManager
         if (Instance == null)
         {
             Instance = this;
         }
+        else
+        {
+            Destroy(gameObject); // If an instance already exists, destroy this duplicate
+            return;
+        }
     }
 
+    // Open the modal window
     public void OpenModal()
     {
-        modalGameObject.gameObject.SetActive(true);
-        list.GetComponent<RectTransform>().DOAnchorPosY(-500f, 0.5f);
-        modalGameObject.transform.GetChild(0).GetComponent<RectTransform>().DOAnchorPosY(0f, 0.5f);
+        modalGameObject.SetActive(true);
+
+        // Animate the list and other elements to create the modal effect
+        listRectTransform.DOAnchorPosY(-500f, 0.5f);
+        modalWindowRectTransform.DOAnchorPosY(0f, 0.5f);
         clientLabel.GetComponent<RectTransform>().DOAnchorPosY(0f, 0.5f);
-        dropdown.GetComponent<RectTransform>().DOAnchorPosY(100f, 0.5f);
+        dropdownRectTransform.DOAnchorPosY(100f, 0.5f);
     }
 
+    // Close the modal window
     public void CloseModal()
     {
-        modalGameObject.transform
-            .GetChild(0)
-            .GetComponent<RectTransform>()
+        // Animate the modal elements to close the modal window
+        modalWindowRectTransform
             .DOAnchorPosY(-500f, 0.5f)
-            .OnComplete(() => modalGameObject.gameObject.SetActive(false));
-        list.GetComponent<RectTransform>().DOAnchorPosY(0f, 0.5f);
+            .OnComplete(() => modalGameObject.SetActive(false));
+
+        listRectTransform.GetComponent<RectTransform>().DOAnchorPosY(0f, 0.5f);
         clientLabel.GetComponent<RectTransform>().DOAnchorPosY(-500f, 0.5f);
-        dropdown.GetComponent<RectTransform>().DOAnchorPosY(-31.75f, 0.5f);
+        dropdownRectTransform.GetComponent<RectTransform>().DOAnchorPosY(-31.75f, 0.5f);
     }
 
+    // Set the data to be displayed in the modal
     public void SetModalData(string name, string points, string address, string label)
     {
         clientName.text = name;

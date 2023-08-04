@@ -1,18 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using DG.Tweening;
 
 public class CircleSpriteBehaviour : MonoBehaviour
 {
     bool markedForDeletion = false;
-
-    private void OnEnable()
-    {
-        gameObject.GetComponent<CircleCollider2D>().enabled = true;
-        transform.DOScale(1f, 2f);
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -29,6 +22,7 @@ public class CircleSpriteBehaviour : MonoBehaviour
         {
             transform.DOScale(0f, 0.5f).OnComplete(() => gameObject.SetActive(false));
             markedForDeletion = false;
+            gameObject.GetComponent<CircleCollider2D>().enabled = true;
         }
     }
 }
