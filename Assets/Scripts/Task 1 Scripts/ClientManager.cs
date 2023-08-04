@@ -26,11 +26,11 @@ public class ClientManager : MonoBehaviour
     [SerializeField]
     Transform clientDetailsParent; // Parent transform to hold client details
 
+    [SerializeField]
     ClientDataWrapper clientData; // Class holding client data from the API
-    List<DataEntry> dataEntry; // List holding data entries from the API
 
-    string dataEntryString;
-    string dataList;
+    [SerializeField]
+    List<DataEntry> dataEntry; // List holding data entries from the API
 
     //I could only see 3 entries valid in the API response, so I have hardcoded the list length to 3
     private int listLength = 3;
@@ -63,12 +63,15 @@ public class ClientManager : MonoBehaviour
                 );
 
                 // Extracting the "data" field from the JSON response
-                dataEntryString = JsonHelper.GetJsonObject(webRequest.downloadHandler.text, "data");
+                string dataEntryString = JsonHelper.GetJsonObject(
+                    webRequest.downloadHandler.text,
+                    "data"
+                );
 
                 // Parsing individual data entries from the "data" field and adding them to the dataEntry list
                 for (int i = 1; i <= listLength; i++)
                 {
-                    dataList = JsonHelper.GetJsonObject(dataEntryString, i.ToString());
+                    string dataList = JsonHelper.GetJsonObject(dataEntryString, i.ToString());
                     Debug.Log(dataList);
                     dataEntry.Add(JsonUtility.FromJson<DataEntry>(dataList));
                 }

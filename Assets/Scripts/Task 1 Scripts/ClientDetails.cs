@@ -19,9 +19,8 @@ public class DataEntry
     public int points;
 }
 
-
 // Represents a collection of client data
-// TO deserialize data I have used JsonHelper.cs
+// TO deserialize "data" I have used JsonHelper.cs
 [System.Serializable]
 public class ClientDataWrapper
 {

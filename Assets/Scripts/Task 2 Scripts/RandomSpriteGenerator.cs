@@ -7,6 +7,7 @@ public class RandomSpriteGenerator : MonoBehaviour
     [SerializeField]
     List<GameObject> sprites = new List<GameObject>();
 
+    // Method to reactivate the sprites with random positions and scaling
     public void Reactivate()
     {
         foreach (GameObject sprite in sprites)

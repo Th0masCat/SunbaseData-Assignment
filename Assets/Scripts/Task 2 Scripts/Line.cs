@@ -1,17 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Line : MonoBehaviour
 {
-    private LineRenderer lineRenderer;
-
     [SerializeField]
     EdgeCollider2D edgeCollider;
 
-    private List<Vector2> points = new List<Vector2>();
-
     List<GameObject> circles = new List<GameObject>();
+    private List<Vector2> points = new();
+
+    private LineRenderer lineRenderer;
 
     private void Awake()
     {
@@ -19,6 +17,7 @@ public class Line : MonoBehaviour
         edgeCollider.transform.position -= transform.position;
     }
 
+    // Method to set a new position for the line
     public void SetPosition(Vector2 pos)
     {
         if (!CanDraw(pos))
@@ -32,6 +31,7 @@ public class Line : MonoBehaviour
         edgeCollider.points = points.ToArray();
     }
 
+    // Check if a new point can be added based on the resolution specified in the DrawManager
     private bool CanDraw(Vector2 pos)
     {
         if (lineRenderer.positionCount == 0)
@@ -41,6 +41,7 @@ public class Line : MonoBehaviour
 
         Vector2 lastPos = lineRenderer.GetPosition(lineRenderer.positionCount - 1);
 
+        // Check if the distance between the last position and the new position is greater than the specified resolution
         return Vector2.Distance(lastPos, pos) > DrawManager.RESOLUTION;
     }
 }

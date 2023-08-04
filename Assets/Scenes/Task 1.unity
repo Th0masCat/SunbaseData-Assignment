@@ -154,6 +154,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clientDetailsPrefab: {fileID: 546174780285313834, guid: 4a1c2018e32ecb94ba3b9450c82e929a, type: 3}
   clientDetailsParent: {fileID: 683990564}
+  clientData:
+    clients: []
+    label: 
+  dataEntry: []
 --- !u!4 &8468315
 Transform:
   m_ObjectHideFlags: 0
