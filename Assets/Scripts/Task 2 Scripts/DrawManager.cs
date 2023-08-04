@@ -34,5 +34,10 @@ public class DrawManager : MonoBehaviour
         {
             currentLine.SetPosition(mousePosition);
         }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            currentLine = null;
+        }
     }
 }
